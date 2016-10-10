@@ -26,8 +26,9 @@
 $objeto = rastrearObjeto( 'PN020936192BR' );
 
 if(! isset( $objeto->erro ) ){
+    echo '<pre>';
 	foreach ($objeto->evento as $e){
-		var_dump( $e );
+		print_r($e);
 	}
 }else{
 	echo $objeto->numero . ": ". $objeto->erro;

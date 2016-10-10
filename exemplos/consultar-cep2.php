@@ -5,11 +5,11 @@
 		if (empty($cep)) {
 			echo 'Informe o CEP';
 		} else {
-			$config = array(
+			/*$config = array(
 		        "trace" => 1, 
 		        "exception" => 0, 
 		        "cache_wsdl" => WSDL_CACHE_MEMORY
-		    );
+		    );*/
 			//http://www.corporativo.correios.com.br/encomendas/sigepweb/doc/Manual_de_Implementacao_do_Web_Service_SIGEPWEB_Logistica_Reversa.pdf
 		    $address = 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';   
 
