@@ -24,7 +24,7 @@
           <div class="form-group">
             <input type="text" class="form-control" name="cep" placeholder="Digite o CEP" required>
           </div>
-          <input type="submit" value="Consultar">
+          <input class="btn btn-primary" type="submit" value="Consultar">
         </form>
       </div>
 
@@ -34,7 +34,7 @@
           <div class="form-group">
             <input type="text" class="form-control" name="codigo" placeholder="Digite o código de rastreio" required>
           </div>
-          <input type="submit" value="Rastrear">
+          <input class="btn btn-primary" type="submit" value="Rastrear">
         </form>
       </div>
 
@@ -69,7 +69,7 @@
           <div class="form-group">
             <input type="text" class="form-control" name="comprimento" placeholder="Digite o Comprimento" required>
           </div>
-          <input type="submit" value="Calcular">
+          <input class="btn btn-primary" type="submit" value="Calcular">
         </form>
       </div>
 
