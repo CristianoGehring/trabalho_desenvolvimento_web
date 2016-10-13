@@ -60,8 +60,10 @@ function consultarCep ($cep) {
     try
 	{
 	    $resposta = $client->consultaCEP($parametros);
-	    echo '<pre>';
-	    print_r($resposta);
+            header("location:../view/cep.php?" .
+                "resposta=$resposta");
+	    //echo '<pre>';
+	    //print_r($resposta);
 	}
 	catch(Exception $e) 
 	{
@@ -88,8 +90,10 @@ function rastrearObj ($codigo) {
     try
 	{
 	    $resposta = $client->buscaEventos( $parametros );
-	    echo '<pre>';
-	    print_r($resposta);
+            header("location:../view/cep.php?" .
+                "resposta=$resposta");
+	    //echo '<pre>';
+	    //print_r($resposta);
 	}
 	catch(Exception $e) 
 	{
@@ -135,10 +139,12 @@ function calcular_frete($cepOrigem,
 	//41106 PAC Varejo
  
     $xml = simplexml_load_file($url);
- 
+    
+    header("location:../view/cep.php?" .
+                "resposta=$xml");
     //return $xml->cServico;
-    echo "<pre>";
-    print_r($xml);
+    //echo "<pre>";
+    //print_r($xml);
  
 }
 ?>
