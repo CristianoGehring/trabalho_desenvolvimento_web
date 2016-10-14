@@ -60,8 +60,9 @@ function consultarCep ($cep) {
     try
 	{
 	    $resposta = $client->consultaCEP($parametros);
-            header("location:../view/cep.php?" .
-                "resposta=$resposta");
+	    $resposta = serialize($resposta->return);
+
+        header("location:../view/cep.php?resposta=$resposta");
 	    //echo '<pre>';
 	    //print_r($resposta);
 	}
@@ -90,10 +91,12 @@ function rastrearObj ($codigo) {
     try
 	{
 	    $resposta = $client->buscaEventos( $parametros );
+	    $resposta = serialize($resposta->return);
             header("location:../view/cep.php?" .
                 "resposta=$resposta");
-	    //echo '<pre>';
-	    //print_r($resposta);
+	    echo '<pre>';
+
+	    print_r($resposta);
 	}
 	catch(Exception $e) 
 	{
@@ -140,11 +143,10 @@ function calcular_frete($cepOrigem,
  
     $xml = simplexml_load_file($url);
     
-    header("location:../view/cep.php?" .
-                "resposta=$xml");
+    //header("location:../view/cep.php?resposta=$xml");
     //return $xml->cServico;
-    //echo "<pre>";
-    //print_r($xml);
+    echo "<pre>";
+    print_r($xml);
  
 }
 ?>
