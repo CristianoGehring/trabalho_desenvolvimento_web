@@ -18,13 +18,13 @@
   <body>
     <div class="container">
 
-      <h1>Resultado</h1><p>
+      <h1>CEP</h1><p>
             <?php
             if (isset($_GET['resposta'])) 
             {
                 //print_r($_GET['resposta']);
                 $resposta = unserialize($_GET['resposta']);
-                echo "<table class='table table-condensed table-striped' style='width: 700px; background-color: #81DAF5;'>"
+                echo "<table class='table table-condensed table-striped' style='width: 1000px; background-color: #81DAF5;'>"
                         . "<thead>"
                             . "<th> CEP </th>"
                             . "<th> Cidade </th>"
