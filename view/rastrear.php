@@ -67,7 +67,10 @@
             }
             ?>
 
-           <h4><a href="../view/correios.php">Retornar</a></h4>
+           <div style="width:300px;">
+        <form action="../view/correios.php">
+          <input class="btn btn-primary" type="submit" value="Voltar">
+        </form>
 
     </div>
   </body>

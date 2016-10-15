@@ -22,28 +22,37 @@
             <?php
             if (isset($_GET['resposta'])) 
             {
+               
                 //print_r($_GET['resposta']);
                 $resposta = unserialize($_GET['resposta']);
                 echo "<table class='table table-condensed table-striped' style='width: 1000px; background-color: #81DAF5;'>"
                         . "<thead>"
                             . "<th> CEP </th>"
                             . "<th> Cidade </th>"
+                            . "<th> Endereço </th>"
                             . "<th> Complemento </th>"
                             . "<th> UF </th>"
                         . "</thead>"
                         . "<tbody>"
                             . "<td> $resposta->cep </td>"
                             . "<td> $resposta->cidade </td>"
+                            . "<td> $resposta->end </td>"
                             . "<td> $resposta->complemento2 </td>"
                             . "<td> $resposta->uf </td>"
                         . "</tbody>"
                     . "</table>";
+                 //echo "<pre>";
                 //print_r($resposta);
             }
             ?>
-
-           <h4><a href="../view/correios.php">Retornar</a></h4>
+            
+          <div style="width:300px;">
+        <form action="../view/correios.php">
+          <input class="btn btn-primary" type="submit" value="Voltar">
+        </form>
+      </div>
 
     </div>
+      
   </body>
 </html>
