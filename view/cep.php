@@ -22,7 +22,23 @@
             <?php
             if (isset($_GET['resposta'])) 
             {
-                print_r($_GET['resposta']);
+                //print_r($_GET['resposta']);
+                $resposta = unserialize($_GET['resposta']);
+                echo "<table class='table table-condensed table-striped' style='width: 700px; background-color: #81DAF5;'>"
+                        . "<thead>"
+                            . "<th> CEP </th>"
+                            . "<th> Cidade </th>"
+                            . "<th> Complemento </th>"
+                            . "<th> UF </th>"
+                        . "</thead>"
+                        . "<tbody>"
+                            . "<td> $resposta->cep </td>"
+                            . "<td> $resposta->cidade </td>"
+                            . "<td> $resposta->complemento2 </td>"
+                            . "<td> $resposta->uf </td>"
+                        . "</tbody>"
+                    . "</table>";
+                //print_r($resposta);
             }
             ?>
 

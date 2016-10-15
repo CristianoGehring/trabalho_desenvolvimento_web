@@ -20,9 +20,63 @@
 
       <h1>Resultado</h1><p>
             <?php
+            
+            function printaResultado($valor, $atributo)
+            {
+                //if($atributo=="endereco")
+                if(property_exists($valor, $atributo))
+                    echo $valor->{$atributo}."<br>";
+            }
+            
             if (isset($_GET['resposta'])) 
             {
-                print_r($_GET['resposta']);
+                 $resposta = unserialize($_GET['resposta']);
+                 $resposta = $resposta->objeto;
+                 echo "$resposta->numero<br>";
+                 echo "$resposta->sigla<br>";
+                 echo "$resposta->nome<br>";
+                 echo "$resposta->categoria<br>";
+                 foreach ($resposta->evento as $res => $evento) {
+                     //printaResultado($evento->tipo);
+                     /*echo "$evento->status<br>";
+                     echo "$evento->data<br>";
+                     echo "$evento->hora<br>";
+                     echo "$evento->descricao<br>";
+                     echo "$evento->recebedor<br>";
+                     echo "$evento->documento<br>";
+                     echo "$evento->comentario<br>";
+                     echo "$evento->local<br>";
+                     echo "$evento->codigo<br>";
+                     echo "$evento->cidade<br>";
+                     echo "$evento->uf<br>";*/
+                     printaResultado($evento, 'status');
+                     printaResultado($evento, 'data');
+                     printaResultado($evento, 'hora');
+                     printaResultado($evento, 'descricao');
+                     printaResultado($evento, 'recebedor');
+                     printaResultado($evento, 'documento');
+                     printaResultado($evento, 'comentario');
+                     printaResultado($evento, 'local');
+                     printaResultado($evento, 'codigo');
+                     printaResultado($evento, 'cidade');
+                     printaResultado($evento, 'uf');
+                 }
+                    /*echo "<table class='table table-condensed table-striped' style='width: 700px; background-color: #81DAF5;'>"
+                        . "<thead>"
+                            . "<th> CEP </th>"
+                            . "<th> Cidade </th>"
+                            . "<th> Complemento </th>"
+                            . "<th> UF </th>"
+                        . "</thead>"
+                        . "<tbody>"
+                            . "<td> $resposta->cep </td>"
+                            . "<td> $resposta->cidade </td>"
+                            . "<td> $resposta->complemento2 </td>"
+                            . "<td> $resposta->uf </td>"
+                        . "</tbody>"
+                    . "</table>";*/
+                 echo "<pre>";
+                print_r($resposta);
             }
             ?>
 
