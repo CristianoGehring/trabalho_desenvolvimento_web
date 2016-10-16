@@ -7,7 +7,9 @@ if (isset($_GET['operacao'])) {
 
 				if($cep != ''){
 					$cep = preg_replace("/[^0-9]/","", $cep);//retira caracteres que não são digitos
-					consultarCep($cep);
+					$resposta = consultarCep($cep);
+					$resposta = serialize($resposta);
+					header("location:../view/cep.php?resposta=$resposta");
 				}
 			}
 			break;
@@ -17,7 +19,8 @@ if (isset($_GET['operacao'])) {
 				$codigo = $_POST['codigo'];
 
 				if($codigo != ''){
-					rastrearObj($codigo);
+					$resposta = rastrearObj($codigo);
+					header("location:../view/rastrear.php?resposta=$resposta");
 				}
 			}
 			break;
@@ -25,25 +28,23 @@ if (isset($_GET['operacao'])) {
 		case 'calcular_frete':
 			$cepOrigem = $_POST['cep_origem'];
 			$cepDestino = $_POST['cep_destino'];
-		    $peso = $_POST['peso'];
-		    $valor = $_POST['valor'];
-		    $tipoFrete = $_POST['tipo_frete'];
-		    $altura = $_POST['altura'];
-		    $largura = $_POST['largura'];
-		    $comprimento = $_POST['comprimento'];
+			$peso = $_POST['peso'];
+			$valor = $_POST['valor'];
+			$tipoFrete = $_POST['tipo_frete'];
+			$altura = $_POST['altura'];
+			$largura = $_POST['largura'];
+			$comprimento = $_POST['comprimento'];
 
-			calcular_frete($cepOrigem,
-		    $cepDestino,
-		    $peso,
-		    $valor,
-		    $tipoFrete,
-		    $altura,
-		    $largura,
-		    $comprimento);
-			break;
-		
-		default:
-			echo utf8_decode("Operação inexistente!");
+			$resposta = calcular_frete($cepOrigem,
+			$cepDestino,
+			$peso,
+			$valor,
+			$tipoFrete,
+			$altura,
+			$largura,
+			$comprimento);
+
+			header("location:../view/calcularFrete.php?resposta=$resposta");
 			break;
 	}
 }
@@ -57,19 +58,18 @@ function consultarCep ($cep) {
 		'cep' => $cep
 	);
 
-    try
+	try
 	{
-	    $resposta = $client->consultaCEP($parametros);
-	    $resposta = serialize($resposta->return);
+		$resposta = $client->consultaCEP($parametros);
 
-        header("location:../view/cep.php?resposta=$resposta");
-	    //echo '<pre>';
-	    //print_r($resposta);
+		return $resposta->return;
 	}
 	catch(Exception $e) 
 	{
-		echo '<pre>';
-	    print_r($e);
+		$obj = new StdClass;
+		$obj->erro = $e->getMessage();
+		return $obj;
+
 	}
 }
 
@@ -77,76 +77,82 @@ function rastrearObj ($codigo) {
 	$wsdl = "http://webservice.correios.com.br/service/rastro/Rastro.wsdl";
 
 	$parametros = array(
-        'usuario'   => 'ECT',
-        'senha'     => 'SRO',
-        'tipo'      => 'L',
-        'resultado' => 'T',
-        'lingua'    => '101',
-        'objetos'	=> $codigo
-    );
+		'usuario'   => 'ECT',
+		'senha'     => 'SRO',
+		'tipo'      => 'L',
+		'resultado' => 'T',
+		'lingua'    => '101',
+		'objetos'	=> $codigo
+	);
 
-    // criando objeto soap a partir da URL
-    $client = new SoapClient( $wsdl );
+	// criando objeto soap a partir da URL
+	$client = new SoapClient( $wsdl );
 
-    try
+	try
 	{
-	    $resposta = $client->buscaEventos( $parametros );
-	    $resposta = serialize($resposta->return);
-            header("location:../view/cep.php?" .
-                "resposta=$resposta");
-	    echo '<pre>';
-
-	    print_r($resposta);
+		$resposta = $client->buscaEventos( $parametros );
+		$resposta = serialize($resposta->return);
+		return $resposta;
 	}
 	catch(Exception $e) 
 	{
 		echo '<pre>';
-	    print_r($e);
+		print_r($e);
 	}
 
 }
 
 function calcular_frete($cepOrigem,
-    $cepDestino,
-    $peso,
-    $valor,
-    $tipoFrete,
-    $altura,
-    $largura,
-    $comprimento){
+	$cepDestino,
+	$peso,
+	$valor,
+	$tipoFrete,
+	$altura,
+	$largura,
+	$comprimento){
  
  
-    $url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?";
-    $url .= "nCdEmpresa=";
-    $url .= "&sDsSenha=";
-    $url .= "&sCepOrigem=" . $cepOrigem;
-    $url .= "&sCepDestino=" . $cepDestino;
-    $url .= "&nVlPeso=" . $peso;
-    $url .= "&nVlLargura=" . $largura;
-    $url .= "&nVlAltura=" . $altura;
-    $url .= "&nCdFormato=1";
-    $url .= "&nVlComprimento=" . $comprimento;
-    $url .= "&sCdMaoProria=n";
-    $url .= "&nVlValorDeclarado=" . $valor;
-    $url .= "&sCdAvisoRecebimento=n";
-    $url .= "&nCdServico=" . $tipoFrete;
-    $url .= "&nVlDiametro=0";
-    $url .= "&StrRetorno=xml";
+	$url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?";
+	$url .= "nCdEmpresa=";
+	$url .= "&sDsSenha=";
+	$url .= "&sCepOrigem=" . $cepOrigem;
+	$url .= "&sCepDestino=" . $cepDestino;
+	$url .= "&nVlPeso=" . $peso;
+	$url .= "&nVlLargura=" . $largura;
+	$url .= "&nVlAltura=" . $altura;
+	$url .= "&nCdFormato=1";
+	$url .= "&nVlComprimento=" . $comprimento;
+	$url .= "&sCdMaoProria=n";
+	$url .= "&nVlValorDeclarado=" . $valor;
+	$url .= "&sCdAvisoRecebimento=n";
+	$url .= "&nCdServico=" . $tipoFrete;
+	$url .= "&nVlDiametro=0";
+	$url .= "&StrRetorno=xml";
  
-    //Sedex: 40010
-    //Pac: 41106
-    //40010 SEDEX Varejo
+	//Sedex: 40010
+	//Pac: 41106
+	//40010 SEDEX Varejo
 	//40045 SEDEX a Cobrar Varejo
 	//40215 SEDEX 10 Varejo
 	//40290 SEDEX Hoje Varejo
 	//41106 PAC Varejo
  
-    $xml = simplexml_load_file($url);
-    
-    //header("location:../view/cep.php?resposta=$xml");
-    //return $xml->cServico;
-    echo "<pre>";
-    print_r($xml);
- 
+	$xml = simplexml_load_file($url);
+
+	var_dump($xml);exit;
+	$resposta = serialize($xml->cServico);
+
+	/*foreach($dados->cServico as $linhas) {
+		if($linhas->Erro == 0) {
+			echo $linhas->Codigo.'</br>';
+			echo $linhas->Valor .'</br>';
+			echo $linhas->PrazoEntrega.' Dias </br>';
+		}else {
+			echo $linhas->MsgErro;
+		}
+	  	echo '<hr>';
+	}*/
+
+	return $resposta;
 }
 ?>

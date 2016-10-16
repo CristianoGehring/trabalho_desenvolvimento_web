@@ -17,40 +17,39 @@
 
   <body>
     <div class="container">
+        <h1>CEP</h1>
 
-      <h1>CEP</h1><p>
-            <?php
-            if (isset($_GET['resposta'])) 
-            {
-               
-                //print_r($_GET['resposta']);
-                $resposta = unserialize($_GET['resposta']);
+        <?php
+        if (isset($_GET['resposta'])) 
+        {
+            $resposta = unserialize($_GET['resposta']);
+
+            if(isset($resposta->erro)){
+                echo "<p>$resposta->erro<p>";
+            }else{
                 echo "<table class='table table-condensed table-striped' style='width: 1000px; background-color: #81DAF5;'>"
-                        . "<thead>"
-                            . "<th> CEP </th>"
-                            . "<th> Cidade </th>"
-                            . "<th> Endereço </th>"
-                            . "<th> Complemento </th>"
-                            . "<th> UF </th>"
-                        . "</thead>"
-                        . "<tbody>"
-                            . "<td> $resposta->cep </td>"
-                            . "<td> $resposta->cidade </td>"
-                            . "<td> $resposta->end </td>"
-                            . "<td> $resposta->complemento2 </td>"
-                            . "<td> $resposta->uf </td>"
-                        . "</tbody>"
-                    . "</table>";
-                 //echo "<pre>";
-                //print_r($resposta);
+                    . "<thead>"
+                        . "<th> CEP </th>"
+                        . "<th> Cidade </th>"
+                        . "<th> Endereço </th>"
+                        . "<th> Complemento </th>"
+                        . "<th> UF </th>"
+                    . "</thead>"
+                    . "<tbody>"
+                        . "<td> $resposta->cep </td>"
+                        . "<td> $resposta->cidade </td>"
+                        . "<td> $resposta->end </td>"
+                        . "<td> $resposta->complemento2 </td>"
+                        . "<td> $resposta->uf </td>"
+                    . "</tbody>"
+                . "</table>";
             }
-            ?>
-            
-          <div style="width:300px;">
-        <form action="../view/correios.php">
-          <input class="btn btn-primary" type="submit" value="Voltar">
-        </form>
-      </div>
+        }
+        ?>
+
+        <div>
+            <a href="../view/correios.php" class="btn btn-primary">Voltar</a>
+        </div>
 
     </div>
       
