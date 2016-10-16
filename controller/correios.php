@@ -19,7 +19,8 @@ if (isset($_GET['operacao'])) {
 				$codigo = $_POST['codigo'];
 
 				if($codigo != ''){
-					$resposta = rastrearObj($codigo);
+					$resposta = rastrearObjeto($codigo);
+					$resposta = serialize($resposta);
 					header("location:../view/rastrear.php?resposta=$resposta");
 				}
 			}
@@ -73,7 +74,7 @@ function consultarCep ($cep) {
 	}
 }
 
-function rastrearObj ($codigo) {
+function rastrearObjeto ($codigo) {
 	$wsdl = "http://webservice.correios.com.br/service/rastro/Rastro.wsdl";
 
 	$parametros = array(
@@ -91,13 +92,14 @@ function rastrearObj ($codigo) {
 	try
 	{
 		$resposta = $client->buscaEventos( $parametros );
-		$resposta = serialize($resposta->return);
-		return $resposta;
+		return $resposta->return;
 	}
 	catch(Exception $e) 
 	{
-		echo '<pre>';
-		print_r($e);
+		$obj = new StdClass;
+		$obj->numero = $codigo;
+		$obj->erro = $e->getMessage();
+		return $obj;
 	}
 
 }

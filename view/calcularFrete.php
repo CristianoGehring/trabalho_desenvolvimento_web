@@ -26,7 +26,9 @@
             }
             ?>
 
-           <h4><a href="../view/correios.php">Retornar</a></h4>
+      <div>
+        <a href="../view/correios.php" class="btn btn-primary">Voltar</a>
+      </div>
 
     </div>
   </body>
