@@ -35,7 +35,7 @@
             function mostraResultado($resposta){
                 if(isset($resposta->erro)){
                     echo "<p>Códigio de Rastreio: $resposta->numero </p>";
-                    echo "<p>Erro:".utf8_decode($resposta->erro)."<p>";
+                    echo "<p>Erro: ".utf8_decode($resposta->erro)."<p>";
 
                 }else{
                     echo "Códigio de Rastreio: $resposta->numero<br>";

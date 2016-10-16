@@ -18,14 +18,17 @@
   <body>
     <div class="container">
 
-      <h1>Resultado</h1><p>
-            <?php
-            if (isset($_GET['resposta'])) 
-            {
-                print_r($_GET['resposta']);
-            }
-            ?>
-
+      <h1>Resultado</h1>
+      <div>
+        <?php
+          if (isset($_GET['resposta'])) 
+          {
+            $resposta = unserialize($_GET['resposta']);
+            echo "<pre>";
+            print_r($resposta);
+          }
+          ?>
+      </div>
       <div>
         <a href="../view/correios.php" class="btn btn-primary">Voltar</a>
       </div>
