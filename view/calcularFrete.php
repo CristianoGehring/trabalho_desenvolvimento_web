@@ -25,8 +25,8 @@
           {
             $resposta = unserialize($_GET['resposta']);
 
-            if(isset($resposta->erro)){
-                echo "<p>$resposta->erro<p>";
+            if($resposta['Erro'] != '0'){
+                echo "<p>".$resposta['MsgErro']."<p>";
             }else{
                 echo "<table class='table table-condensed table-striped' style='width: 1000px; background-color: #81DAF5;'>"
                     . "<thead>"
@@ -37,16 +37,16 @@
                         . "<th> Entrega Sabado </th>"
                     . "</thead>"
                     . "<tbody>"
-                        . "<td> $resposta->Codigo </td>"
-                        . "<td> $resposta->Valor </td>"
-                        . "<td> $resposta->PrazoEntrega </td>"
-                        . "<td> $resposta->EntregaDomiciliar </td>"
-                        . "<td> $resposta->EntregaSabado </td>"
+                       . "<td> ".$resposta['Codigo']." </td>"
+                        . "<td> ".$resposta['Valor']." </td>"
+                        . "<td> ".$resposta['PrazoEntrega']." </td>"
+                        . "<td> ".$resposta['EntregaDomiciliar']." </td>"
+                        . "<td> ".$resposta['EntregaSabado']." </td>"
                     . "</tbody>"
                 . "</table>";
             }
-            echo "<pre>";
-            print_r($resposta);
+            //echo "<pre>";
+            //print_r($resposta);
           }
           ?>
       </div>
