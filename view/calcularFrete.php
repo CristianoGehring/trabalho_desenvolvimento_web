@@ -24,6 +24,27 @@
           if (isset($_GET['resposta'])) 
           {
             $resposta = unserialize($_GET['resposta']);
+
+            if(isset($resposta->erro)){
+                echo "<p>$resposta->erro<p>";
+            }else{
+                echo "<table class='table table-condensed table-striped' style='width: 1000px; background-color: #81DAF5;'>"
+                    . "<thead>"
+                        . "<th> Codigo </th>"
+                        . "<th> Valor </th>"
+                        . "<th> Prazo de Entrega (dias) </th>"
+                        . "<th> Entrega Domiciliar </th>"
+                        . "<th> Entrega Sabado </th>"
+                    . "</thead>"
+                    . "<tbody>"
+                        . "<td> $resposta->Codigo </td>"
+                        . "<td> $resposta->Valor </td>"
+                        . "<td> $resposta->PrazoEntrega </td>"
+                        . "<td> $resposta->EntregaDomiciliar </td>"
+                        . "<td> $resposta->EntregaSabado </td>"
+                    . "</tbody>"
+                . "</table>";
+            }
             echo "<pre>";
             print_r($resposta);
           }
